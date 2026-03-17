@@ -1,0 +1,7 @@
+# Query 3 — Attack Timeline
+# Visualizes the volume of failed login attempts over time, grouped by source IP.
+# Use with a line chart to see the pattern of the brute force attack.
+
+index=main sourcetype=linux_secure "Failed password" earliest=-24h latest=now
+| rex field=_raw "from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
+| timechart count by src_ip

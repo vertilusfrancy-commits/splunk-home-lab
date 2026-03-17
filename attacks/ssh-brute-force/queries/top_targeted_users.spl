@@ -1,0 +1,6 @@
+# Query 4 — Top Targeted Users
+# Shows which usernames were most frequently targeted in the brute force attack.
+
+index=main sourcetype=linux_secure "Failed password" earliest=-24h latest=now
+| rex field=_raw "for (?<user>\w+) from"
+| top user

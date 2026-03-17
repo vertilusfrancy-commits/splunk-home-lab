@@ -1,0 +1,9 @@
+# Query 2 — Brute Force Detection by Source IP
+# Extracts source IPs from raw logs and counts failed attempts per IP.
+# IPs with more than 10 attempts are flagged as potential brute force attackers.
+
+index=main sourcetype=linux_secure "Failed password" earliest=-24h latest=now
+| rex field=_raw "from (?<src_ip>\d+\.\d+\.\d+\.\d+)"
+| stats count by src_ip
+| where count > 10
+| sort -count
