@@ -1,1 +1,6 @@
+# Query 1 — All Failed SSH Login Attempts
+# Shows every failed password attempt with timestamp, host, source IP and targeted user.
 
+index=main sourcetype=linux_secure "Failed password" earliest=-24h latest=now
+| table _time, host, src_ip, user
+| sort -_time
